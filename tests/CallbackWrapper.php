@@ -7,7 +7,7 @@
 
 namespace Icewind\Streams\Tests;
 
-class CallBackWrapper extends Wrapper {
+class CallbackWrapper extends Wrapper {
 
 	/**
 	 * @param resource $source

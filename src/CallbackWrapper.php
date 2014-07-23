@@ -22,7 +22,7 @@ namespace Icewind\Streams;
  *
  * All callbacks are called after the operation is executed on the source stream
  */
-class CallBackWrapper extends Wrapper {
+class CallbackWrapper extends Wrapper {
 	/**
 	 * @var callable
 	 */
