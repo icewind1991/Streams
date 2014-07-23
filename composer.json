@@ -1,7 +1,6 @@
 {
-	"name"             : "Icewind/Streams",
+	"name"             : "icewind/streams",
 	"description"      : "A set of generic stream wrappers",
-	"minimum-stability": "stable",
 	"license"          : "MIT",
 	"authors"          : [
 		{
