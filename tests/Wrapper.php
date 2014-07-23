@@ -75,6 +75,9 @@ abstract class Wrapper extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testTruncate() {
+		if (version_compare(phpversion(), '5.4.0', '<')) {
+			$this->markTestSkipped('php <5.4 doesn\'t support truncate for stream wrappers');
+		}
 		$source = fopen('php://temp', 'r+');
 		fwrite($source, 'foobar');
 		rewind($source);
