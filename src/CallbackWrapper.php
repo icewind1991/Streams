@@ -20,7 +20,7 @@ namespace Icewind\Streams;
  *     ]
  * ]
  *
- * All callbacks are called before the operation is executed on the source stream
+ * All callbacks are called after the operation is executed on the source stream
  */
 class CallBackWrapper extends Wrapper {
 	/**
@@ -54,23 +54,26 @@ class CallBackWrapper extends Wrapper {
 	}
 
 	public function stream_read($count) {
+		$result = parent::stream_read($count);
 		if ($this->readCallback) {
 			call_user_func($this->readCallback, $count);
 		}
-		return parent::stream_read($count);
+		return $result;
 	}
 
 	public function stream_write($data) {
+		$result = parent::stream_write($data);
 		if ($this->writeCallback) {
 			call_user_func($this->writeCallback, $data);
 		}
-		return parent::stream_write($data);
+		return $result;
 	}
 
 	public function stream_close() {
+		$result = parent::stream_close();
 		if ($this->closeCallback) {
 			call_user_func($this->closeCallback);
 		}
-		return parent::stream_close();
+		return $result;
 	}
 }
