@@ -21,8 +21,6 @@ use \Icewind\Streams\CallBackWrapper;
 
 require('vendor/autoload.php');
 
-stream_wrapper_register('callback', '\Icewind\Streams\CallbackWrapper');
-
 // get an existing stream to wrap
 $source = fopen('php://temp', 'r+');
 
