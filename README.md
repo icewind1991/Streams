@@ -26,21 +26,20 @@ stream_wrapper_register('callback', '\Icewind\Streams\CallbackWrapper');
 // get an existing stream to wrap
 $source = fopen('php://temp', 'r+');
 
-$context = stream_context_create(array(
-	'callback' => array(
-		'source' => $source,
-		'read' => function ($count) {
-				echo "read " . $count . "bytes\n";
-			},
-		'write' => function ($data) {
-				echo "wrote '" . $data . "'\n";
-			},
-		'close' => function () {
-				echo "stream closed\n";
-			}
-	)
-));
-$stream = fopen('callback://', 'r+', false, $context);
+// register the callbacks
+$stream = CallbackWrapper::wrap($source,
+	// read callback
+	function ($count) {
+		echo "read " . $count . "bytes\n";
+	},
+	// write callback
+	function ($data) {
+		echo "wrote '" . $data . "'\n";
+	},
+	// close callback
+	function () {
+		echo "stream closed\n";
+	});
 
 fwrite($stream, 'some dummy data');
 

@@ -38,6 +38,30 @@ class CallBackWrapper extends Wrapper {
 	 */
 	protected $closeCallback;
 
+	/**
+	 * Wraps a stream with the provided callbacks
+	 *
+	 * @param resource $source
+	 * @param callable $read (optional)
+	 * @param callable $write (optional)
+	 * @param callable $close (optional)
+	 * @return resource
+	 */
+	public static function wrap($source, $read = null, $write = null, $close = null) {
+		stream_wrapper_register('callback', '\Icewind\Streams\CallbackWrapper');
+		$context = stream_context_create(array(
+			'callback' => array(
+				'source' => $source,
+				'read' => $read,
+				'write' => $write,
+				'close' => $close
+			)
+		));
+		$wrapped = fopen('callback://', 'r+', false, $context);
+		stream_wrapper_unregister('callback');
+		return $wrapped;
+	}
+
 	public function stream_open() {
 		$context = $this->loadContext('callback');
 

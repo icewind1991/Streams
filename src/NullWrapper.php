@@ -7,7 +7,27 @@
 
 namespace Icewind\Streams;
 
+/**
+ * Stream wrapper that does nothing, used for tests
+ */
 class NullWrapper extends Wrapper {
+	/**
+	 * Wraps a stream with the provided callbacks
+	 *
+	 * @param resource $source
+	 * @return resource
+	 */
+	public static function wrap($source) {
+		stream_wrapper_register('null', '\Icewind\Streams\NullWrapper');
+		$context = stream_context_create(array(
+			'null' => array(
+				'source' => $source)
+		));
+		$wrapped = fopen('null://', 'r+', false, $context);
+		stream_wrapper_unregister('null');
+		return $wrapped;
+	}
+
 	public function stream_open() {
 		$this->loadContext('null');
 		return true;

@@ -7,46 +7,46 @@
 
 namespace Icewind\Streams\Tests;
 
-class NullWrapperTest extends Wrapper {
-
-	public function setUp() {
-		stream_wrapper_register('null', '\Icewind\Streams\NullWrapper');
-	}
-
-	public function tearDown() {
-		stream_wrapper_unregister('null');
-	}
+class NullWrapper extends Wrapper {
 
 	/**
 	 * @param resource $source
 	 * @return resource
 	 */
 	protected function wrapSource($source) {
-		$context = stream_context_create(array(
-			'null' => array(
-				'source' => $source
-			)
-		));
-		return fopen('null://', 'r+', false, $context);
+		return \Icewind\Streams\NullWrapper::wrap($source);
 	}
 
 	/**
 	 * @expectedException \BadMethodCallException
 	 */
 	public function testNoContext() {
+		stream_wrapper_register('null', '\Icewind\Streams\NullWrapper');
 		$context = stream_context_create(array());
-		fopen('null://', 'r+', false, $context);
+		try {
+			fopen('null://', 'r+', false, $context);
+			stream_wrapper_unregister('null');
+		} catch (\Exception $e) {
+			stream_wrapper_unregister('null');
+			throw $e;
+		}
 	}
 
 	/**
 	 * @expectedException \BadMethodCallException
 	 */
 	public function testNoSource() {
+		stream_wrapper_register('null', '\Icewind\Streams\NullWrapper');
 		$context = stream_context_create(array(
 			'null' => array(
 				'source' => 'bar'
 			)
 		));
-		fopen('null://', 'r+', false, $context);
+		try {
+			fopen('null://', 'r+', false, $context);
+		} catch (\Exception $e) {
+			stream_wrapper_unregister('null');
+			throw $e;
+		}
 	}
 }

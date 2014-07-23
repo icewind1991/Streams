@@ -7,15 +7,7 @@
 
 namespace Icewind\Streams\Tests;
 
-class CallableWrapper extends Wrapper {
-
-	public function setUp() {
-		stream_wrapper_register('callback', '\Icewind\Streams\CallbackWrapper');
-	}
-
-	public function tearDown() {
-		stream_wrapper_unregister('callback');
-	}
+class CallBackWrapper extends Wrapper {
 
 	/**
 	 * @param resource $source
@@ -25,15 +17,7 @@ class CallableWrapper extends Wrapper {
 	 * @return resource
 	 */
 	protected function wrapSource($source, $read = null, $write = null, $close = null) {
-		$context = stream_context_create(array(
-			'callback' => array(
-				'source' => $source,
-				'read' => $read,
-				'write' => $write,
-				'close' => $close
-			)
-		));
-		return fopen('callback://', 'r+', false, $context);
+		return \Icewind\Streams\CallbackWrapper::wrap($source, $read, $write, $close);
 	}
 
 	public function testReadCallback() {
