@@ -14,6 +14,11 @@ namespace Icewind\Streams;
  */
 abstract class Wrapper implements File {
 	/**
+	 * @var resource
+	 */
+	public $context;
+
+	/**
 	 * The wrapped stream
 	 *
 	 * @var resource
