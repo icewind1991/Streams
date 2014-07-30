@@ -12,7 +12,7 @@ namespace Icewind\Streams;
  *
  * This wrapper itself doesn't implement any functionality but is just a base class for other wrappers to extend
  */
-abstract class Wrapper {
+abstract class Wrapper implements File {
 	/**
 	 * The wrapped stream
 	 *

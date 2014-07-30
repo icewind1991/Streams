@@ -28,7 +28,7 @@ class NullWrapper extends Wrapper {
 		return $wrapped;
 	}
 
-	public function stream_open() {
+	public function stream_open($path, $mode, $options, &$opened_path) {
 		$this->loadContext('null');
 		return true;
 	}
