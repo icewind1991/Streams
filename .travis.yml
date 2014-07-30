@@ -5,6 +5,10 @@ php:
   - 5.5
   - hhvm
 
+matrix:
+    allow_failures:
+        - php: hhvm # due to facebook/hhvm#3321
+
 env:
   global:
     - CURRENT_DIR=`pwd`
