@@ -116,7 +116,12 @@ class IteratorDirectory implements Directory {
 			throw new \BadMethodCallException('$source should be an Iterator or array');
 		}
 		stream_wrapper_register('iterator', '\Icewind\Streams\IteratorDirectory');
-		$wrapped = opendir('iterator://', $context);
+		try {
+			$wrapped = opendir('iterator://', $context);
+		} catch (\BadMethodCallException $e) {
+			stream_wrapper_unregister('iterator');
+			throw $e;
+		}
 		stream_wrapper_unregister('iterator');
 		return $wrapped;
 	}

@@ -16,14 +16,21 @@ class NullWrapper extends Wrapper {
 	 *
 	 * @param resource $source
 	 * @return resource
+	 *
+	 * @throws \BadMethodCallException
 	 */
 	public static function wrap($source) {
-		stream_wrapper_register('null', '\Icewind\Streams\NullWrapper');
 		$context = stream_context_create(array(
 			'null' => array(
 				'source' => $source)
 		));
-		$wrapped = fopen('null://', 'r+', false, $context);
+		stream_wrapper_register('null', '\Icewind\Streams\NullWrapper');
+		try {
+			$wrapped = fopen('null://', 'r+', false, $context);
+		} catch (\BadMethodCallException $e) {
+			stream_wrapper_unregister('null');
+			throw $e;
+		}
 		stream_wrapper_unregister('null');
 		return $wrapped;
 	}

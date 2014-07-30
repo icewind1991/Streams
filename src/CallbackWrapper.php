@@ -46,9 +46,10 @@ class CallbackWrapper extends Wrapper {
 	 * @param callable $write (optional)
 	 * @param callable $close (optional)
 	 * @return resource
+	 *
+	 * @throws \BadMethodCallException
 	 */
 	public static function wrap($source, $read = null, $write = null, $close = null) {
-		stream_wrapper_register('callback', '\Icewind\Streams\CallbackWrapper');
 		$context = stream_context_create(array(
 			'callback' => array(
 				'source' => $source,
@@ -57,7 +58,13 @@ class CallbackWrapper extends Wrapper {
 				'close' => $close
 			)
 		));
-		$wrapped = fopen('callback://', 'r+', false, $context);
+		stream_wrapper_register('callback', '\Icewind\Streams\CallbackWrapper');
+		try {
+			$wrapped = fopen('callback://', 'r+', false, $context);
+		} catch (\BadMethodCallException $e) {
+			stream_wrapper_unregister('callback');
+			throw $e;
+		}
 		stream_wrapper_unregister('callback');
 		return $wrapped;
 	}

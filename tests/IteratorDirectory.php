@@ -21,8 +21,8 @@ class IteratorDirectory extends \PHPUnit_Framework_TestCase {
 	 * @expectedException \BadMethodCallException
 	 */
 	public function testNoContext() {
-		stream_wrapper_register('iterator', '\Icewind\Streams\IteratorDirectory');
 		$context = stream_context_create(array());
+		stream_wrapper_register('iterator', '\Icewind\Streams\IteratorDirectory');
 		try {
 			opendir('iterator://', $context);
 			stream_wrapper_unregister('iterator');
@@ -36,12 +36,12 @@ class IteratorDirectory extends \PHPUnit_Framework_TestCase {
 	 * @expectedException \BadMethodCallException
 	 */
 	public function testInvalidSource() {
-		stream_wrapper_register('iterator', '\Icewind\Streams\IteratorDirectory');
 		$context = stream_context_create(array(
 			'dir' => array(
 				'array' => 2
 			)
 		));
+		stream_wrapper_register('iterator', '\Icewind\Streams\IteratorDirectory');
 		try {
 			opendir('iterator://', $context);
 			stream_wrapper_unregister('iterator');
