@@ -20,6 +20,13 @@ class CallbackWrapper extends Wrapper {
 		return \Icewind\Streams\CallbackWrapper::wrap($source, $read, $write, $close);
 	}
 
+	/**
+	 * @expectedException \BadMethodCallException
+	 */
+	public function testWrapInvalidSource() {
+		$this->wrapSource('foo');
+	}
+
 	public function testReadCallback() {
 		$called = false;
 		$callBack = function () use (&$called) {

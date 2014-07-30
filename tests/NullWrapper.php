@@ -49,4 +49,11 @@ class NullWrapper extends Wrapper {
 			throw $e;
 		}
 	}
+
+	/**
+	 * @expectedException \BadMethodCallException
+	 */
+	public function testWrapInvalidSource() {
+		$this->wrapSource('foo');
+	}
 }
