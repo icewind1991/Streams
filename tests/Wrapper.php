@@ -102,4 +102,38 @@ abstract class Wrapper extends \PHPUnit_Framework_TestCase {
 		stream_set_timeout($wrapped, 1, 0);
 		stream_set_write_buffer($wrapped, 0);
 	}
+
+	public function testReadDir() {
+		$source = opendir(__DIR__);
+		$content = array();
+		while (($name = readdir($source)) !== false) {
+			$content[] = $name;
+		}
+		closedir($source);
+
+		$source = opendir(__DIR__);
+		$wrapped = $this->wrapSource($source);
+		$wrappedContent = array();
+		while (($name = readdir($wrapped)) !== false) {
+			$wrappedContent[] = $name;
+		}
+		$this->assertEquals($content, $wrappedContent);
+	}
+
+	public function testRewindDir() {
+		$source = opendir(__DIR__);
+		$content = array();
+		while (($name = readdir($source)) !== false) {
+			$content[] = $name;
+		}
+		closedir($source);
+
+		$source = opendir(__DIR__);
+		$wrapped = $this->wrapSource($source);
+		$this->assertEquals($content[0], readdir($wrapped));
+		$this->assertEquals($content[1], readdir($wrapped));
+		$this->assertEquals($content[2], readdir($wrapped));
+		rewinddir($wrapped);
+		$this->assertEquals($content[0], readdir($wrapped));
+	}
 }

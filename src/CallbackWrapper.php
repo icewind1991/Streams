@@ -13,10 +13,11 @@ namespace Icewind\Streams;
  * The following options should be passed in the context when opening the stream
  * [
  *     'callback' => [
- *        'source' => resource
- *        'read'   => function($count){} (optional)
- *        'write'  => function($data){} (optional)
- *        'close'  => function(){} (optional)
+ *        'source'  => resource
+ *        'read'    => function($count){} (optional)
+ *        'write'   => function($data){} (optional)
+ *        'close'   => function(){} (optional)
+ *        'readdir' => function(){} (optional)
  *     ]
  * ]
  *
@@ -39,37 +40,36 @@ class CallbackWrapper extends Wrapper {
 	protected $closeCallback;
 
 	/**
+	 * @var callable
+	 */
+	protected $readDirCallBack;
+
+	/**
 	 * Wraps a stream with the provided callbacks
 	 *
 	 * @param resource $source
 	 * @param callable $read (optional)
 	 * @param callable $write (optional)
 	 * @param callable $close (optional)
+	 * @param callable $readDir (optional)
 	 * @return resource
 	 *
 	 * @throws \BadMethodCallException
 	 */
-	public static function wrap($source, $read = null, $write = null, $close = null) {
+	public static function wrap($source, $read = null, $write = null, $close = null, $readDir = null) {
 		$context = stream_context_create(array(
 			'callback' => array(
 				'source' => $source,
 				'read' => $read,
 				'write' => $write,
-				'close' => $close
+				'close' => $close,
+				'readDir' => $readDir
 			)
 		));
-		stream_wrapper_register('callback', '\Icewind\Streams\CallbackWrapper');
-		try {
-			$wrapped = fopen('callback://', 'r+', false, $context);
-		} catch (\BadMethodCallException $e) {
-			stream_wrapper_unregister('callback');
-			throw $e;
-		}
-		stream_wrapper_unregister('callback');
-		return $wrapped;
+		return Wrapper::wrapSource($source, $context, 'callback', '\Icewind\Streams\CallbackWrapper');
 	}
 
-	public function stream_open($path, $mode, $options, &$opened_path) {
+	protected function open() {
 		$context = $this->loadContext('callback');
 
 		if (is_callable($context['read'])) {
@@ -81,7 +81,18 @@ class CallbackWrapper extends Wrapper {
 		if (is_callable($context['close'])) {
 			$this->closeCallback = $context['close'];
 		}
+		if (is_callable($context['readDir'])) {
+			$this->readDirCallBack = $context['readDir'];
+		}
 		return true;
+	}
+
+	public function dir_opendir($path, $options) {
+		return $this->open();
+	}
+
+	public function stream_open($path, $mode, $options, &$opened_path) {
+		return $this->open();
 	}
 
 	public function stream_read($count) {
@@ -104,6 +115,14 @@ class CallbackWrapper extends Wrapper {
 		$result = parent::stream_close();
 		if ($this->closeCallback) {
 			call_user_func($this->closeCallback);
+		}
+		return $result;
+	}
+
+	public function dir_readdir() {
+		$result = parent::dir_readdir();
+		if ($this->readDirCallBack) {
+			call_user_func($this->readDirCallBack);
 		}
 		return $result;
 	}

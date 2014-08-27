@@ -14,10 +14,11 @@ class CallbackWrapper extends Wrapper {
 	 * @param callable $read
 	 * @param callable $write
 	 * @param callable $close
+	 * @param callable $readDir
 	 * @return resource
 	 */
-	protected function wrapSource($source, $read = null, $write = null, $close = null) {
-		return \Icewind\Streams\CallbackWrapper::wrap($source, $read, $write, $close);
+	protected function wrapSource($source, $read = null, $write = null, $close = null, $readDir = null) {
+		return \Icewind\Streams\CallbackWrapper::wrap($source, $read, $write, $close, $readDir);
 	}
 
 	/**
@@ -67,6 +68,19 @@ class CallbackWrapper extends Wrapper {
 
 		$wrapped = $this->wrapSource($source, null, null, $callBack);
 		fclose($wrapped);
+		$this->assertTrue($called);
+	}
+
+	public function testReadDirCallback() {
+		$called = false;
+		$callBack = function () use (&$called) {
+			$called = true;
+		};
+
+		$source = opendir(sys_get_temp_dir());
+
+		$wrapped = $this->wrapSource($source, null, null, null, $callBack);
+		readdir($wrapped);
 		$this->assertTrue($called);
 	}
 }
