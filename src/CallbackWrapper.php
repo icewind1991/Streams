@@ -72,18 +72,10 @@ class CallbackWrapper extends Wrapper {
 	protected function open() {
 		$context = $this->loadContext('callback');
 
-		if (is_callable($context['read'])) {
-			$this->readCallback = $context['read'];
-		}
-		if (is_callable($context['write'])) {
-			$this->writeCallback = $context['write'];
-		}
-		if (is_callable($context['close'])) {
-			$this->closeCallback = $context['close'];
-		}
-		if (is_callable($context['readDir'])) {
-			$this->readDirCallBack = $context['readDir'];
-		}
+		$this->readCallback = $context['read'];
+		$this->writeCallback = $context['write'];
+		$this->closeCallback = $context['close'];
+		$this->readDirCallBack = $context['readDir'];
 		return true;
 	}
 
@@ -97,7 +89,7 @@ class CallbackWrapper extends Wrapper {
 
 	public function stream_read($count) {
 		$result = parent::stream_read($count);
-		if ($this->readCallback) {
+		if (is_callable($this->readCallback)) {
 			call_user_func($this->readCallback, $count);
 		}
 		return $result;
@@ -105,7 +97,7 @@ class CallbackWrapper extends Wrapper {
 
 	public function stream_write($data) {
 		$result = parent::stream_write($data);
-		if ($this->writeCallback) {
+		if (is_callable($this->writeCallback)) {
 			call_user_func($this->writeCallback, $data);
 		}
 		return $result;
@@ -113,7 +105,7 @@ class CallbackWrapper extends Wrapper {
 
 	public function stream_close() {
 		$result = parent::stream_close();
-		if ($this->closeCallback) {
+		if (is_callable($this->closeCallback)) {
 			call_user_func($this->closeCallback);
 		}
 		return $result;
@@ -121,7 +113,7 @@ class CallbackWrapper extends Wrapper {
 
 	public function dir_readdir() {
 		$result = parent::dir_readdir();
-		if ($this->readDirCallBack) {
+		if (is_callable($this->readDirCallBack)) {
 			call_user_func($this->readDirCallBack);
 		}
 		return $result;
