@@ -35,10 +35,10 @@ class IteratorDirectory extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @expectedException \BadMethodCallException
 	 */
-	public function testInvalidSource() {
+	public function testNoSource() {
 		$context = stream_context_create(array(
 			'dir' => array(
-				'array' => 2
+				'foo' => 'bar'
 			)
 		));
 		stream_wrapper_register('iterator', '\Icewind\Streams\IteratorDirectory');
