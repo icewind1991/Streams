@@ -129,4 +129,11 @@ class UrlCallBack extends \PHPUnit_Framework_TestCase {
 		}
 		$this->assertTrue($called);
 	}
+
+	public function testMKDirRecursive() {
+		$dir = $this->getTempDir() . '/test/sad';
+		$path = \Icewind\Streams\UrlCallBack::wrap($dir);
+		mkdir($path, 0700, true);
+		$this->assertTrue(file_exists($dir));
+	}
 }

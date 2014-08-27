@@ -93,7 +93,7 @@ class UrlCallback extends Wrapper implements Url {
 	public function mkdir($path, $mode, $options) {
 		$context = $this->loadContext($path);
 		$this->callCallBack($context, 'mkdir');
-		return mkdir($context['source'], $mode, $options);
+		return mkdir($context['source'], $mode, $options & STREAM_MKDIR_RECURSIVE);
 	}
 
 	public function rmdir($path, $options) {
