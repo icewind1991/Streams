@@ -72,13 +72,13 @@ class CallbackWrapper extends Wrapper {
 	public function stream_open($path, $mode, $options, &$opened_path) {
 		$context = $this->loadContext('callback');
 
-		if (isset($context['read']) and is_callable($context['read'])) {
+		if (is_callable($context['read'])) {
 			$this->readCallback = $context['read'];
 		}
-		if (isset($context['write']) and is_callable($context['write'])) {
+		if (is_callable($context['write'])) {
 			$this->writeCallback = $context['write'];
 		}
-		if (isset($context['close']) and is_callable($context['close'])) {
+		if (is_callable($context['close'])) {
 			$this->closeCallback = $context['close'];
 		}
 		return true;
