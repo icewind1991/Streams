@@ -75,11 +75,12 @@ class DirectoryWrapper implements Directory {
 
 	/**
 	 * @param string $options the options for the context to wrap the stream with
+	 * @param string $class
 	 * @return resource
 	 */
-	protected static function wrapWithOptions($options) {
+	protected static function wrapWithOptions($options, $class) {
 		$context = stream_context_create($options);
-		stream_wrapper_register('dirwrapper', static::class);
+		stream_wrapper_register('dirwrapper', $class);
 		$wrapped = opendir('dirwrapper://', $context);
 		stream_wrapper_unregister('dirwrapper');
 		return $wrapped;
