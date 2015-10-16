@@ -74,22 +74,6 @@ class DirectoryWrapper implements Directory {
 	}
 
 	/**
-	 * Creates a directory handle from the provided array or iterator
-	 *
-	 * @param resource $source
-	 * @return resource
-	 *
-	 * @throws \BadMethodCallException
-	 */
-	public static function wrap($source) {
-		$options = array(
-			'dir' => array(
-				'source' => $source)
-		);
-		return self::wrapWithOptions($options);
-	}
-
-	/**
 	 * @param string $options the options for the context to wrap the stream with
 	 * @return resource
 	 */
