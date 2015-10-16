@@ -9,33 +9,36 @@ namespace Icewind\Streams\Tests;
 
 class DirectoryFilter extends \PHPUnit_Framework_TestCase {
 	public function testFilterAcceptAll() {
-		$this->filter(['a', 'b', 'c'],
+		$this->filter(array('a', 'b', 'c'),
 			function () {
 				return true;
 			},
-			['a', 'b', 'c']);
+			array('a', 'b', 'c')
+		);
 	}
 
 	public function testFilterRejectAll() {
-		$this->filter(['a', 'b', 'c'],
+		$this->filter(array('a', 'b', 'c'),
 			function () {
 				return false;
 			},
-			[]);
+			array()
+		);
 	}
 
 	public function testFilterRejectLong() {
-		$this->filter(['a', 'bb', 'c'],
+		$this->filter(array('a', 'bb', 'c'),
 			function ($file) {
 				return strlen($file) < 2;
 			},
-			['a', 'c']);
+			array('a', 'c')
+		);
 	}
 
 	private function filter(array $files, callable $filter, array $expected) {
 		$source = \Icewind\Streams\IteratorDirectory::wrap($files);
 		$filtered = \Icewind\Streams\DirectoryFilter::wrap($source, $filter);
-		$result = [];
+		$result = array();
 		while (($file = readdir($filtered)) !== false) {
 			$result[] = $file;
 		}

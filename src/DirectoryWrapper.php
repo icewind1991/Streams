@@ -74,7 +74,7 @@ class DirectoryWrapper implements Directory {
 	}
 
 	/**
-	 * @param string $options the options for the context to wrap the stream with
+	 * @param array $options the options for the context to wrap the stream with
 	 * @param string $class
 	 * @return resource
 	 */
