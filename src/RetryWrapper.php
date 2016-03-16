@@ -20,7 +20,7 @@ class RetryWrapper extends Wrapper {
 	 */
 	public static function wrap($source) {
 		$context = stream_context_create(array(
-			'callback' => array(
+			'retry' => array(
 				'source' => $source
 			)
 		));
