@@ -35,6 +35,32 @@ class PartialWrapper extends \Icewind\Streams\NullWrapper {
 	}
 }
 
+class FailWrapper extends \Icewind\Streams\NullWrapper {
+	/**
+	 * Wraps a stream with the provided callbacks
+	 *
+	 * @param resource $source
+	 * @return resource
+	 *
+	 * @throws \BadMethodCallException
+	 */
+	public static function wrap($source) {
+		$context = stream_context_create(array(
+			'null' => array(
+				'source' => $source)
+		));
+		return self::wrapSource($source, $context, 'fail', '\Icewind\Streams\Tests\FailWrapper');
+	}
+
+	public function stream_read($count) {
+		return false;
+	}
+
+	public function stream_write($data) {
+		return false;
+	}
+}
+
 class RetryWrapper extends Wrapper {
 
 	/**
@@ -51,5 +77,17 @@ class RetryWrapper extends Wrapper {
 
 	public function testRewindDir() {
 		$this->markTestSkipped('directories not supported');
+	}
+
+	public function testFailedRead() {
+		$source = fopen('data://text/plain,foo', 'r');
+		$wrapped = \Icewind\Streams\RetryWrapper::wrap(FailWrapper::wrap($source));
+		$this->assertEquals('', fread($wrapped, 10));
+	}
+
+	public function testFailedWrite() {
+		$source = fopen('php://temp', 'w');
+		$wrapped = \Icewind\Streams\RetryWrapper::wrap(FailWrapper::wrap($source));
+		fwrite($wrapped, 'foo');
 	}
 }
