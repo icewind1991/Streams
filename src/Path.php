@@ -74,6 +74,9 @@ class Path {
 	 * @param array $values
 	 */
 	protected function appendDefaultContent($values) {
+		if (!is_array(current($values))) {
+			$values = array($this->getProtocol() => $values);
+		}
 		$context = stream_context_get_default();
 		$defaults = stream_context_get_options($context);
 		foreach ($values as $key => $value) {
