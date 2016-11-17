@@ -28,7 +28,14 @@ abstract class Wrapper implements File, Directory {
 	protected static function wrapSource($source, $context, $protocol, $class) {
 		try {
 			stream_wrapper_register($protocol, $class);
-			if (@rewinddir($source) === false) {
+			// there is no way to check if a resource is a directory or file handle expect trying to use it as one or the other
+			// and check for errors
+			// we need to suppress error reporting since we expect a warning every time this is called with a file handle
+			$reportingLevel = error_reporting();
+			error_reporting(0);
+			$isFileHandle = rewinddir($source) === false;
+			error_reporting($reportingLevel);
+			if ($isFileHandle) {
 				$wrapped = fopen($protocol . '://', 'r+', false, $context);
 			} else {
 				$wrapped = opendir($protocol . '://', $context);
