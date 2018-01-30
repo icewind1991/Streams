@@ -7,7 +7,7 @@
 
 namespace Icewind\Streams\Tests;
 
-abstract class Wrapper extends \PHPUnit_Framework_TestCase {
+abstract class WrapperTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @param resource $source
 	 * @return resource

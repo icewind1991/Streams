@@ -61,7 +61,7 @@ class FailWrapper extends \Icewind\Streams\NullWrapper {
 	}
 }
 
-class RetryWrapper extends Wrapper {
+class RetryWrapperTest extends WrapperTest {
 
 	/**
 	 * @param resource $source

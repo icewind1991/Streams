@@ -7,7 +7,7 @@
 
 namespace Icewind\Streams\Tests;
 
-class NullWrapper extends Wrapper {
+class NullWrapperTest extends WrapperTest {
 
 	/**
 	 * @param resource $source
