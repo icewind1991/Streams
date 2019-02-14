@@ -90,7 +90,7 @@ class CallbackWrapper extends Wrapper {
 	public function stream_read($count) {
 		$result = parent::stream_read($count);
 		if (is_callable($this->readCallback)) {
-			call_user_func($this->readCallback, $count);
+			call_user_func($this->readCallback, $result);
 		}
 		return $result;
 	}
