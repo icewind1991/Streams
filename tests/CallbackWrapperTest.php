@@ -15,10 +15,11 @@ class CallbackWrapperTest extends WrapperTest {
 	 * @param callable $write
 	 * @param callable $close
 	 * @param callable $readDir
+	 * @param callable $preClose
 	 * @return resource
 	 */
-	protected function wrapSource($source, $read = null, $write = null, $close = null, $readDir = null) {
-		return \Icewind\Streams\CallbackWrapper::wrap($source, $read, $write, $close, $readDir);
+	protected function wrapSource($source, $read = null, $write = null, $close = null, $readDir = null, $preClose = null) {
+		return \Icewind\Streams\CallbackWrapper::wrap($source, $read, $write, $close, $readDir, $preClose);
 	}
 
 	/**
@@ -81,6 +82,23 @@ class CallbackWrapperTest extends WrapperTest {
 
 		$wrapped = $this->wrapSource($source, null, null, null, $callBack);
 		readdir($wrapped);
+		$this->assertTrue($called);
+	}
+
+	public function testPreCloseCallback() {
+		$called = false;
+
+		$source = fopen('php://temp', 'r+');
+		fwrite($source, 'foobar');
+		rewind($source);
+
+		$callBack = function ($stream) use (&$called, $source) {
+			$called = true;
+			$this->assertSame($stream, $source);
+		};
+
+		$wrapped = $this->wrapSource($source, null, null, null, null, $callBack);
+		fclose($wrapped);
 		$this->assertTrue($called);
 	}
 }
