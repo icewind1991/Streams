@@ -31,8 +31,10 @@ class CallbackWrapperTest extends WrapperTest {
 
 	public function testReadCallback() {
 		$called = false;
-		$callBack = function () use (&$called) {
+		$bytesRead = 0;
+		$callBack = function ($count) use (&$called, &$bytesRead) {
 			$called = true;
+			$bytesRead += $count;
 		};
 
 		$source = fopen('php://temp', 'r+');
@@ -42,6 +44,9 @@ class CallbackWrapperTest extends WrapperTest {
 		$wrapped = $this->wrapSource($source, $callBack);
 		$this->assertEquals('foo', fread($wrapped, 3));
 		$this->assertTrue($called);
+
+		$this->assertEquals('bar', fread($wrapped, 1000));
+		$this->assertEquals(6, $bytesRead);
 	}
 
 	public function testWriteCallback() {
