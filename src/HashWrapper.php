@@ -55,10 +55,8 @@ class HashWrapper extends Wrapper {
 	 */
 	public static function wrap($source, $hash, $callback) {
 		$context = stream_context_create(array(
-			'hash' => array(
-				'hash' => $hash,
-				'callback' => $callback,
-			)
+			'hash' => $hash,
+			'callback' => $callback,
 		));
 		return self::wrapSource($source, $context);
 	}
