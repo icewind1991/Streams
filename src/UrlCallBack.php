@@ -61,7 +61,7 @@ class UrlCallback extends Wrapper implements Url {
 			'unlink' => $unlink,
 			'stat' => $stat
 		);
-		return new Path('\Icewind\Streams\UrlCallBack', $options);
+		return new Path(static::class, $options);
 	}
 
 	protected function loadContext($url) {

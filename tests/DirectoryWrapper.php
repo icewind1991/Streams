@@ -13,7 +13,7 @@ class DirectoryWrapperNull extends \Icewind\Streams\DirectoryWrapper {
 			'dir' => array(
 				'source' => $source)
 		);
-		return self::wrapWithOptions($options, '\Icewind\Streams\Tests\DirectoryWrapperNull');
+		return self::wrapWithOptions($options);
 	}
 }
 
@@ -23,7 +23,7 @@ class DirectoryWrapperDummy extends \Icewind\Streams\DirectoryWrapper {
 			'dir' => array(
 				'source' => $source)
 		);
-		return self::wrapWithOptions($options, '\Icewind\Streams\Tests\DirectoryWrapperDummy');
+		return self::wrapWithOptions($options);
 	}
 
 	public function dir_readdir() {

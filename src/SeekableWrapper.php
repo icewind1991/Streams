@@ -39,7 +39,7 @@ class SeekableWrapper extends Wrapper {
 				'source' => $source
 			)
 		));
-		return Wrapper::wrapSource($source, $context, 'callback', '\Icewind\Streams\SeekableWrapper');
+		return self::wrapSource($source, $context);
 	}
 
 	public function dir_opendir($path, $options) {

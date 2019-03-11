@@ -21,7 +21,7 @@ class PartialWrapper extends \Icewind\Streams\NullWrapper {
 			'null' => array(
 				'source' => $source)
 		));
-		return self::wrapSource($source, $context, 'partial', '\Icewind\Streams\Tests\PartialWrapper');
+		return self::wrapSource($source, $context);
 	}
 
 	public function stream_read($count) {
@@ -49,7 +49,7 @@ class FailWrapper extends \Icewind\Streams\NullWrapper {
 			'null' => array(
 				'source' => $source)
 		));
-		return self::wrapSource($source, $context, 'fail', '\Icewind\Streams\Tests\FailWrapper');
+		return self::wrapSource($source, $context);
 	}
 
 	public function stream_read($count) {

@@ -55,6 +55,6 @@ class DirectoryFilter extends DirectoryWrapper {
 				'filter' => $filter
 			)
 		);
-		return self::wrapWithOptions($options, '\Icewind\Streams\DirectoryFilter');
+		return self::wrapWithOptions($options);
 	}
 }

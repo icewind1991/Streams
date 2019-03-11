@@ -72,7 +72,7 @@ class CallbackWrapper extends Wrapper {
 				'preClose' => $preClose,
 			)
 		));
-		return Wrapper::wrapSource($source, $context, 'callback', '\Icewind\Streams\CallbackWrapper');
+		return self::wrapSource($source, $context);
 	}
 
 	protected function open() {
