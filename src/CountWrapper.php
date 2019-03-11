@@ -55,7 +55,7 @@ class CountWrapper extends Wrapper {
 	 *
 	 * @param resource $source
 	 * @param callable $callback
-	 * @return resource
+	 * @return resource|bool
 	 *
 	 * @throws \BadMethodCallException
 	 */

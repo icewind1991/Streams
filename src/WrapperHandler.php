@@ -42,8 +42,8 @@ class WrapperHandler {
 	/**
 	 * @param resource|int $source
 	 * @param resource|array $context
-	 * @param null $protocol deprecated, protocol is now automatically generated
-	 * @param null $class deprecated, class is now automatically generated
+	 * @param string|null $protocol deprecated, protocol is now automatically generated
+	 * @param string|null $class deprecated, class is now automatically generated
 	 * @return bool|resource
 	 */
 	protected static function wrapSource($source, $context = [], $protocol = null, $class = null) {

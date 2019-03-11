@@ -35,7 +35,11 @@ class SeekableWrapper extends Wrapper {
 
 	public function stream_open($path, $mode, $options, &$opened_path) {
 		$this->loadContext();
-		$this->cache = fopen('php://temp', 'w+');
+		$cache = fopen('php://temp', 'w+');
+		if ($cache === false) {
+			return false;
+		}
+		$this->cache = $cache;
 		return true;
 	}
 
