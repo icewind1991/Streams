@@ -17,7 +17,7 @@ install:
 script:
   - mkdir -p build/logs
   - cd tests
-  - phpunit --coverage-clover ../build/logs/clover.xml --configuration phpunit.xml
+  - ../vendor/bin/phpunit --coverage-clover ../build/logs/clover.xml --configuration phpunit.xml
 
 after_script:
  - cd $CURRENT_DIR
