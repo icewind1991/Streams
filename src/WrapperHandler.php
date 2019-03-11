@@ -39,6 +39,15 @@ class WrapperHandler {
 		return strtolower(array_pop($parts));
 	}
 
+	private static function buildContext($protocol, $context, $source) {
+		if (is_array($context)) {
+			$context['source'] = $source;
+			return stream_context_create([$protocol => $context]);
+		} else {
+			return $context;
+		}
+	}
+
 	/**
 	 * @param resource|int $source
 	 * @param resource|array $context
@@ -52,33 +61,25 @@ class WrapperHandler {
 		}
 
 		$protocol = self::getProtocol($class);
-
-		if (is_array($context)) {
-			$context['source'] = $source;
-			$context = stream_context_create([$protocol => $context]);
-		}
-
-		if ($source !== self::NO_SOURCE_DIR && !is_resource($source)) {
-			throw new \BadMethodCallException();
-		}
+		$context = self::buildContext($protocol, $context, $source);
 		try {
 			stream_wrapper_register($protocol, $class);
 			if (self::isDirectoryHandle($source)) {
-				$wrapped = opendir($protocol . '://', $context);
+				return opendir($protocol . '://', $context);
 			} else {
-				$wrapped = fopen($protocol . '://', 'r+', false, $context);
+				return fopen($protocol . '://', 'r+', false, $context);
 			}
-		} catch (\BadMethodCallException $e) {
+		} finally {
 			stream_wrapper_unregister($protocol);
-			throw $e;
 		}
-		stream_wrapper_unregister($protocol);
-		return $wrapped;
 	}
 
 	protected static function isDirectoryHandle($resource) {
 		if ($resource === self::NO_SOURCE_DIR) {
 			return true;
+		}
+		if (!is_resource($resource)) {
+			throw new \BadMethodCallException('Invalid stream source');
 		}
 		$meta = stream_get_meta_data($resource);
 		return $meta['stream_type'] === 'dir' || $meta['stream_type'] === 'user-space-dir';
