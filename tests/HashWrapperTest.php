@@ -43,10 +43,10 @@ class HashWrapperTest extends \PHPUnit_Framework_TestCase {
 
 	public function hashData() {
 		return [
-			['md5',  'a8ae2f4a56baf78845c041c833946d00'],
-			['sha1', 'f0fd7dbb3fae612002143d51f763b50b4f23bc56'],
-			['sha256', '88fe62d4432873edfe147f9d950dc3a78d50de0e71be8a44f5f13d6ad11bced6'],
-			['sha512', 'e0e7794d6d7e011ccf4e869b796f3cc80425c6bd6d02118b861a18aabb36b77c15cc6368e1c5cf84338bc0592092d08c670a6f099fce5067cb2a910d3b3f06fd'],
+			['md5',  '818c6e601a24f72750da0f6c9b8ebe28'],
+			['sha1', 'cca0871ecbe200379f0a1e4b46de177e2d62e655'],
+			['sha256', '973153f86ec2da1748e63f0cf85b89835b42f8ee8018c549868a1308a19f6ca3'],
+			['sha512', '83cd8866be238eda447cb0ee94a6bfa6248109346b1ce3c75f8a67d35f3d8ab1697b46703065c094fcc7d3a61acc1e8ee85a4f306f13cc1a7aea7651781199b3'],
 		];
 	}
 
