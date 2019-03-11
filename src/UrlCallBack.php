@@ -51,7 +51,7 @@ class UrlCallback extends Wrapper implements Url {
 	 */
 	public static function wrap($source, $fopen = null, $opendir = null, $mkdir = null, $rename = null, $rmdir = null,
 								$unlink = null, $stat = null) {
-		$options = array(
+		return new Path(static::class, [
 			'source' => $source,
 			'fopen' => $fopen,
 			'opendir' => $opendir,
@@ -60,11 +60,10 @@ class UrlCallback extends Wrapper implements Url {
 			'rmdir' => $rmdir,
 			'unlink' => $unlink,
 			'stat' => $stat
-		);
-		return new Path(static::class, $options);
+		]);
 	}
 
-	protected function loadContext($url) {
+	protected function loadUrlContext($url) {
 		list($protocol) = explode('://', $url);
 		$options = stream_context_get_options($this->context);
 		return $options[$protocol];
@@ -77,40 +76,40 @@ class UrlCallback extends Wrapper implements Url {
 	}
 
 	public function stream_open($path, $mode, $options, &$opened_path) {
-		$context = $this->loadContext($path);
+		$context = $this->loadUrlContext($path);
 		$this->callCallBack($context, 'fopen');
 		$this->setSourceStream(fopen($context['source'], $mode));
 		return true;
 	}
 
 	public function dir_opendir($path, $options) {
-		$context = $this->loadContext($path);
+		$context = $this->loadUrlContext($path);
 		$this->callCallBack($context, 'opendir');
 		$this->setSourceStream(opendir($context['source']));
 		return true;
 	}
 
 	public function mkdir($path, $mode, $options) {
-		$context = $this->loadContext($path);
+		$context = $this->loadUrlContext($path);
 		$this->callCallBack($context, 'mkdir');
 		return mkdir($context['source'], $mode, $options & STREAM_MKDIR_RECURSIVE);
 	}
 
 	public function rmdir($path, $options) {
-		$context = $this->loadContext($path);
+		$context = $this->loadUrlContext($path);
 		$this->callCallBack($context, 'rmdir');
 		return rmdir($context['source']);
 	}
 
 	public function rename($source, $target) {
-		$context = $this->loadContext($source);
+		$context = $this->loadUrlContext($source);
 		$this->callCallBack($context, 'rename');
 		list(, $target) = explode('://', $target);
 		return rename($context['source'], $target);
 	}
 
 	public function unlink($path) {
-		$context = $this->loadContext($path);
+		$context = $this->loadUrlContext($path);
 		$this->callCallBack($context, 'unlink');
 		return unlink($context['source']);
 	}

@@ -8,20 +8,8 @@
 namespace Icewind\Streams\Tests;
 
 class PartialWrapper extends \Icewind\Streams\NullWrapper {
-	/**
-	 * Wraps a stream with the provided callbacks
-	 *
-	 * @param resource $source
-	 * @return resource
-	 *
-	 * @throws \BadMethodCallException
-	 */
 	public static function wrap($source) {
-		$context = stream_context_create(array(
-			'null' => array(
-				'source' => $source)
-		));
-		return self::wrapSource($source, $context);
+		return self::wrapSource($source);
 	}
 
 	public function stream_read($count) {
@@ -36,20 +24,8 @@ class PartialWrapper extends \Icewind\Streams\NullWrapper {
 }
 
 class FailWrapper extends \Icewind\Streams\NullWrapper {
-	/**
-	 * Wraps a stream with the provided callbacks
-	 *
-	 * @param resource $source
-	 * @return resource
-	 *
-	 * @throws \BadMethodCallException
-	 */
 	public static function wrap($source) {
-		$context = stream_context_create(array(
-			'null' => array(
-				'source' => $source)
-		));
-		return self::wrapSource($source, $context);
+		return self::wrapSource($source);
 	}
 
 	public function stream_read($count) {

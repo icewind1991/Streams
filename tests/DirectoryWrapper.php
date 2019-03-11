@@ -9,21 +9,13 @@ namespace Icewind\Streams\Tests;
 
 class DirectoryWrapperNull extends \Icewind\Streams\DirectoryWrapper {
 	public static function wrap($source) {
-		$options = array(
-			'dir' => array(
-				'source' => $source)
-		);
-		return self::wrapWithOptions($options);
+		return self::wrapSource($source);
 	}
 }
 
 class DirectoryWrapperDummy extends \Icewind\Streams\DirectoryWrapper {
 	public static function wrap($source) {
-		$options = array(
-			'dir' => array(
-				'source' => $source)
-		);
-		return self::wrapWithOptions($options);
+		return self::wrapSource($source);
 	}
 
 	public function dir_readdir() {
