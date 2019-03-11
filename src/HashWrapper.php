@@ -56,7 +56,6 @@ class HashWrapper extends Wrapper {
 	public static function wrap($source, $hash, $callback) {
 		$context = stream_context_create(array(
 			'hash' => array(
-				'source' => $source,
 				'hash' => $hash,
 				'callback' => $callback,
 			)
@@ -69,7 +68,7 @@ class HashWrapper extends Wrapper {
 	}
 
 	public function stream_open($path, $mode, $options, &$opened_path) {
-		$context = $this->loadContext('callback');
+		$context = $this->loadContext();
 		$this->callback = $context['callback'];
 		$this->hashContext = hash_init($context['hash']);
 		return true;
