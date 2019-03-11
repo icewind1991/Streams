@@ -24,7 +24,7 @@ class NullWrapper extends Wrapper {
 			'null' => array(
 				'source' => $source)
 		));
-		return Wrapper::wrapSource($source, $context, 'null', '\Icewind\Streams\NullWrapper');
+		return self::wrapSource($source, $context);
 	}
 
 	public function stream_open($path, $mode, $options, &$opened_path) {

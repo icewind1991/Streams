@@ -24,7 +24,7 @@ class RetryWrapper extends Wrapper {
 				'source' => $source
 			)
 		));
-		return Wrapper::wrapSource($source, $context, 'retry', '\Icewind\Streams\RetryWrapper');
+		return self::wrapSource($source, $context);
 	}
 
 	protected function open() {

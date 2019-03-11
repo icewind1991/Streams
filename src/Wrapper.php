@@ -25,7 +25,19 @@ abstract class Wrapper implements File, Directory {
 	 */
 	protected $source;
 
-	protected static function wrapSource($source, $context, $protocol, $class) {
+	/**
+	 * @param $source
+	 * @param $context
+	 * @param null $protocol deprecated, protocol is now automatically generated
+	 * @param null $class deprecated, class is now automatically generated
+	 * @return bool|resource
+	 */
+	protected static function wrapSource($source, $context, $protocol = null, $class = null) {
+		if ($class === null) {
+			$class = static::class;
+		}
+		$parts = explode('\\', $class);
+		$protocol = strtolower(array_pop($parts));
 		if (!is_resource($source)) {
 			throw new \BadMethodCallException();
 		}

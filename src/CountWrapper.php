@@ -69,7 +69,7 @@ class CountWrapper extends Wrapper {
 				'callback' => $callback
 			)
 		));
-		return Wrapper::wrapSource($source, $context, 'callback', '\Icewind\Streams\CountWrapper');
+		return self::wrapSource($source, $context);
 	}
 
 	protected function open() {
