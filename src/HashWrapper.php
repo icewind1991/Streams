@@ -54,10 +54,10 @@ class HashWrapper extends Wrapper {
 	 * @throws \BadMethodCallException
 	 */
 	public static function wrap($source, $hash, $callback) {
-		$context = stream_context_create(array(
+		$context = array(
 			'hash' => $hash,
 			'callback' => $callback,
-		));
+		);
 		return self::wrapSource($source, $context);
 	}
 
