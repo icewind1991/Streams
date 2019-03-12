@@ -60,7 +60,10 @@ class WrapperHandler {
 			$class = static::class;
 		}
 
-		$protocol = self::getProtocol($class);
+		if ($protocol === null) {
+			$protocol = self::getProtocol($class);
+		}
+
 		$context = self::buildContext($protocol, $context, $source);
 		try {
 			stream_wrapper_register($protocol, $class);
