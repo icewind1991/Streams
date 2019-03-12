@@ -24,19 +24,31 @@
 namespace Icewind\Streams\Tests;
 
 class HashWrapperTest extends \PHPUnit_Framework_TestCase {
+	const DATA = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+
 	/**
 	 * @param resource $source
 	 * @param string $hash
 	 * @param callable $callback
 	 * @return resource
 	 */
-	protected function wrapSource($source, $hash, $callback) {
-		return \Icewind\Streams\HashWrapper::wrap($source, $hash, $callback);
+	protected function wrapSourceRead($source, $hash, $callback) {
+		return \Icewind\Streams\ReadHashWrapper::wrap($source, $hash, $callback);
+	}
+
+	/**
+	 * @param resource $source
+	 * @param string $hash
+	 * @param callable $callback
+	 * @return resource
+	 */
+	protected function wrapSourceWrite($source, $hash, $callback) {
+		return \Icewind\Streams\WriteHashWrapper::wrap($source, $hash, $callback);
 	}
 
 	protected function getSource() {
 		$source = fopen('php://temp', 'w+');
-		fwrite($source, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
+		fwrite($source, self::DATA);
 		fseek($source, 0);
 		return $source;
 	}
@@ -56,15 +68,40 @@ class HashWrapperTest extends \PHPUnit_Framework_TestCase {
 	 * @param string $algorithm
 	 * @param string $expectedHash
 	 */
-	public function testHash($algorithm, $expectedHash) {
+	public function testReadHash($algorithm, $expectedHash) {
 		$obtainedHash = null;
 		$callback = function($hash) use (&$obtainedHash) {
 			$obtainedHash = $hash;
 		};
 
-		$stream = $this->wrapSource($this->getSource(), $algorithm, $callback);
+		$stream = $this->wrapSourceRead($this->getSource(), $algorithm, $callback);
 		while(feof($stream) === false) {
 			fread($stream, 20);
+		}
+		fclose($stream);
+
+		$this->assertSame($expectedHash, $obtainedHash);
+	}
+
+	/**
+	 * @dataProvider hashData
+	 *
+	 * @param string $algorithm
+	 * @param string $expectedHash
+	 */
+	public function testWriteHash($algorithm, $expectedHash) {
+		$obtainedHash = null;
+		$callback = function($hash) use (&$obtainedHash) {
+			$obtainedHash = $hash;
+		};
+
+		$source = fopen('php://temp', 'w+');
+
+		$stream = $this->wrapSourceWrite($source, $algorithm, $callback);
+		$pos = 0;
+		while ($pos < strlen(self::DATA)) {
+			fwrite($stream, substr(self::DATA, $pos, 20));
+			$pos += 20;
 		}
 		fclose($stream);
 

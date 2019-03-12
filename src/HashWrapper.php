@@ -23,15 +23,8 @@
 
 namespace Icewind\Streams;
 
-/**
- * Wrapper that calculates the hash on the stream on read
- *
- * The stream and hash should be passed in when wrapping the stream.
- * On close the callback will be called with the calculated checksum.
- *
- * For supported hashes see: http://php.net/manual/en/function.hash-algos.php
- */
-class HashWrapper extends Wrapper {
+
+abstract class HashWrapper extends Wrapper {
 
 	/**
 	 * @var callable
@@ -49,15 +42,15 @@ class HashWrapper extends Wrapper {
 	 * @param resource $source
 	 * @param string $hash
 	 * @param callable $callback
-	 * @return resource
+	 * @return resource|bool
 	 *
 	 * @throws \BadMethodCallException
 	 */
 	public static function wrap($source, $hash, $callback) {
-		$context = array(
+		$context = [
 			'hash' => $hash,
 			'callback' => $callback,
-		);
+		];
 		return self::wrapSource($source, $context);
 	}
 
@@ -72,12 +65,8 @@ class HashWrapper extends Wrapper {
 		return true;
 	}
 
-	public function stream_read($count) {
-		$data = parent::stream_read($count);
-		if ($this->hashContext !== false) {
-			hash_update($this->hashContext, $data);
-		}
-		return $data;
+	protected function updateHash($data) {
+		hash_update($this->hashContext, $data);
 	}
 
 	public function stream_close() {
@@ -87,4 +76,5 @@ class HashWrapper extends Wrapper {
 		}
 		return parent::stream_close();
 	}
+
 }
