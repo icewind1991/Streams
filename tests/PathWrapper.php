@@ -19,6 +19,6 @@ class PathWrapper extends \PHPUnit_Framework_TestCase {
 		$data = 'foobar';
 		$stream = $this->getDataStream($data);
 		$path = \Icewind\Streams\PathWrapper::getPath($stream);
-		$this->assertEquals($data, file_get_contents($path));
+		$this->assertSame($data, file_get_contents($path));
 	}
 }

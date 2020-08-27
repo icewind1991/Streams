@@ -42,11 +42,11 @@ class CallbackWrapperTest extends WrapperTest {
 		rewind($source);
 
 		$wrapped = $this->wrapSource($source, $callBack);
-		$this->assertEquals('foo', fread($wrapped, 3));
+		$this->assertSame('foo', fread($wrapped, 3));
 		$this->assertTrue($called);
 
-		$this->assertEquals('bar', fread($wrapped, 1000));
-		$this->assertEquals(6, $bytesRead);
+		$this->assertSame('bar', fread($wrapped, 1000));
+		$this->assertSame(6, $bytesRead);
 	}
 
 	public function testWriteCallback() {
@@ -59,7 +59,7 @@ class CallbackWrapperTest extends WrapperTest {
 
 		$wrapped = $this->wrapSource($source, null, $callBack);
 		fwrite($wrapped, 'foobar');
-		$this->assertEquals('foobar', $lastData);
+		$this->assertSame('foobar', $lastData);
 	}
 
 	public function testCloseCallback() {

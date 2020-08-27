@@ -46,7 +46,7 @@ class CountWrapperTest extends WrapperTest {
 
 		stream_get_contents($wrapped);
 		fclose($wrapped);
-		$this->assertEquals(6, $count);
+		$this->assertSame(6, $count);
 	}
 
 	public function testWriteCount() {
@@ -60,6 +60,6 @@ class CountWrapperTest extends WrapperTest {
 
 		fwrite($wrapped, 'foobar');
 		fclose($wrapped);
-		$this->assertEquals(6, $count);
+		$this->assertSame(6, $count);
 	}
 }
