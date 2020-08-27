@@ -70,7 +70,7 @@ class UrlCallback extends \PHPUnit_Framework_TestCase {
 		$dir = $this->getTempDir() . '/test';
 		$path = \Icewind\Streams\UrlCallback::wrap($dir, null, null, $callback);
 		mkdir($path);
-		$this->assertTrue(file_exists($dir));
+		$this->assertFileExists($dir);
 		$this->assertTrue($called);
 	}
 
@@ -83,7 +83,7 @@ class UrlCallback extends \PHPUnit_Framework_TestCase {
 		mkdir($dir);
 		$path = \Icewind\Streams\UrlCallback::wrap($dir, null, null, null, null, $callback);
 		rmdir($path);
-		$this->assertFalse(file_exists($dir));
+		$this->assertFileNotExists($dir);
 		$this->assertTrue($called);
 	}
 
@@ -97,7 +97,7 @@ class UrlCallback extends \PHPUnit_Framework_TestCase {
 		$path = \Icewind\Streams\UrlCallback::wrap($source, null, null, null, $callback);
 		$target = $path->wrapPath($source . '_rename');
 		rename($path, $target);
-		$this->assertTrue(file_exists($source . '_rename'));
+		$this->assertFileExists($source . '_rename');
 		$this->assertTrue($called);
 	}
 
@@ -110,7 +110,7 @@ class UrlCallback extends \PHPUnit_Framework_TestCase {
 		touch($file);
 		$path = \Icewind\Streams\UrlCallback::wrap($file, null, null, null, null, null, $callback);
 		unlink($path);
-		$this->assertFalse(file_exists($file));
+		$this->assertFileNotExists($file);
 		$this->assertTrue($called);
 	}
 
@@ -134,6 +134,6 @@ class UrlCallback extends \PHPUnit_Framework_TestCase {
 		$dir = $this->getTempDir() . '/test/sad';
 		$path = \Icewind\Streams\UrlCallback::wrap($dir);
 		mkdir($path, 0700, true);
-		$this->assertTrue(file_exists($dir));
+		$this->assertFileExists($dir);
 	}
 }

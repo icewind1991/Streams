@@ -32,11 +32,11 @@ class SeekableWrapper extends \PHPUnit_Framework_TestCase {
 		$source = $this->getSource();
 		$wrapped = $this->wrapSource($source);
 		fseek($wrapped, 6);
-		$this->assertEquals(6, ftell($source));
-		$this->assertEquals(6, ftell($wrapped));
-		$this->assertEquals('ipsum', fread($wrapped, '5'));
+		$this->assertSame(6, ftell($source));
+		$this->assertSame(6, ftell($wrapped));
+		$this->assertSame('ipsum', fread($wrapped, '5'));
 		fseek($wrapped, 6);
-		$this->assertEquals(6, ftell($wrapped));
+		$this->assertSame(6, ftell($wrapped));
 		$this->assertGreaterThan(6, ftell($source));
 	}
 
@@ -45,8 +45,8 @@ class SeekableWrapper extends \PHPUnit_Framework_TestCase {
 		$wrapped = $this->wrapSource($source);
 		fseek($wrapped, 6);
 		fseek($wrapped, 6, SEEK_CUR);
-		$this->assertEquals(12, ftell($source));
-		$this->assertEquals(12, ftell($wrapped));
-		$this->assertEquals('dolor', fread($wrapped, '5'));
+		$this->assertSame(12, ftell($source));
+		$this->assertSame(12, ftell($wrapped));
+		$this->assertSame('dolor', fread($wrapped, '5'));
 	}
 }
