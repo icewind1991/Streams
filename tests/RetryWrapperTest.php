@@ -34,6 +34,6 @@ class RetryWrapperTest extends WrapperTest {
 	public function testFailedWrite() {
 		$source = fopen('php://temp', 'w');
 		$wrapped = \Icewind\Streams\RetryWrapper::wrap(FailWrapper::wrap($source));
-		$this->assertFalse(fwrite($wrapped, 'foo'));
+		$this->assertFalse((bool)fwrite($wrapped, 'foo'));
 	}
 }
