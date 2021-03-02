@@ -3,4 +3,10 @@
 	<testsuite name='Stream'>
 		<directory suffix='.php'>./</directory>
 	</testsuite>
+
+	<coverage>
+		<include>
+			<directory suffix=".php">../src</directory>
+		</include>
+	</coverage>
 </phpunit>

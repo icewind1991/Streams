@@ -43,7 +43,11 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.0'
+          coverage: pcov
       - name: Composer
         run: composer install
       - name: PHPUnit Tests
-        run: php ./vendor/bin/phpunit tests
+        run: php ./vendor/bin/phpunit tests  -c tests/phpunit.xml --coverage-clover=coverage.xml
+      - uses: codecov/codecov-action@v1
+        with:
+          files: ./coverage.xml
