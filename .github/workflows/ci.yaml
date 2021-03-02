@@ -58,3 +58,24 @@ jobs:
       - uses: codecov/codecov-action@v1
         with:
           files: ./coverage.xml
+
+  phpunit-8:
+    runs-on: ubuntu-20.04
+    name: Unit tests
+
+    strategy:
+      matrix:
+        php-version:
+          - "7.2"
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "${{ matrix.php-version }}"
+          coverage: pcov
+      - name: Composer
+        run: composer require --dev phpunit/phpunit ^8
+      - name: PHPUnit Tests
+        run: php ./vendor/bin/phpunit tests  -c tests/phpunit.xml

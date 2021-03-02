@@ -85,7 +85,7 @@ class UrlCallbackTest extends TestCase {
 		mkdir($dir);
 		$path = \Icewind\Streams\UrlCallback::wrap($dir, null, null, null, null, $callback);
 		rmdir($path);
-		$this->assertFileDoesNotExist($dir);
+		$this->assertFileNotExists($dir);
 		$this->assertTrue($called);
 	}
 
@@ -112,7 +112,7 @@ class UrlCallbackTest extends TestCase {
 		touch($file);
 		$path = \Icewind\Streams\UrlCallback::wrap($file, null, null, null, null, null, $callback);
 		unlink($path);
-		$this->assertFileDoesNotExist($file);
+		$this->assertFileNotExists($file);
 		$this->assertTrue($called);
 	}
 
