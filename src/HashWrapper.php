@@ -26,12 +26,12 @@ namespace Icewind\Streams;
 abstract class HashWrapper extends Wrapper {
 
 	/**
-	 * @var callable
+	 * @var callable|null
 	 */
 	private $callback;
 
 	/**
-	 * @var resource
+	 * @var resource|\HashContext
 	 */
 	private $hashContext;
 
