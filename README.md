@@ -1,6 +1,7 @@
 # Streams #
 
 [![CI](https://github.com/icewind1991/Streams/actions/workflows/ci.yaml/badge.svg)](https://github.com/icewind1991/Streams/actions/workflows/ci.yaml)
+[![codecov](https://codecov.io/gh/icewind1991/Streams/branch/master/graph/badge.svg?token=bfPcAdGAaq)](https://codecov.io/gh/icewind1991/Streams)
 
 Generic stream wrappers for php.
 
