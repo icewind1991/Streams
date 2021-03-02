@@ -37,22 +37,6 @@ jobs:
     runs-on: ubuntu-20.04
     name: Unit tests
 
-    strategy:
-      matrix:
-        backend:
-          - smbclient
-          - libsmbclient
-
-    services:
-      samba:
-        image: dperson/samba
-        env:
-          USER: "test;test"
-          SHARE: "test;/tmp;yes;no;yes;all;none"
-        ports:
-          - 139:139
-          - 445:445
-
     steps:
       - uses: actions/checkout@v2
       - name: Setup PHP
