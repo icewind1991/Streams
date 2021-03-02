@@ -28,19 +28,19 @@ interface File {
 	public function stream_seek($offset, $whence = SEEK_SET);
 
 	/**
-	 * @return int
+	 * @return int|false
 	 */
 	public function stream_tell();
 
 	/**
 	 * @param int $count
-	 * @return string
+	 * @return string|false
 	 */
 	public function stream_read($count);
 
 	/**
 	 * @param string $data
-	 * @return int
+	 * @return int|false
 	 */
 	public function stream_write($data);
 
@@ -59,7 +59,7 @@ interface File {
 	public function stream_truncate($size);
 
 	/**
-	 * @return array
+	 * @return array|false
 	 */
 	public function stream_stat();
 

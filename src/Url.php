@@ -58,7 +58,7 @@ interface Url {
 	/**
 	 * @param string $path
 	 * @param int $flags
-	 * @return array
+	 * @return array|false
 	 */
 	public function url_stat($path, $flags);
 }
