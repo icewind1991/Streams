@@ -63,11 +63,11 @@ class CallbackWrapper extends Wrapper {
 	 */
 	public static function wrap($source, $read = null, $write = null, $close = null, $readDir = null, $preClose = null) {
 		$context = [
-			'source' => $source,
-			'read' => $read,
-			'write' => $write,
-			'close' => $close,
-			'readDir' => $readDir,
+			'source'   => $source,
+			'read'     => $read,
+			'write'    => $write,
+			'close'    => $close,
+			'readDir'  => $readDir,
 			'preClose' => $preClose,
 		];
 		return self::wrapSource($source, $context);

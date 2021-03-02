@@ -19,12 +19,12 @@ class DirectoryWrapper extends IteratorDirectory {
 	}
 
 	public function testManipulateContent() {
-		$source = \Icewind\Streams\IteratorDirectory::wrap(array('asd', 'bar'));
+		$source = \Icewind\Streams\IteratorDirectory::wrap(['asd', 'bar']);
 		$wrapped = DirectoryWrapperDummy::wrap($source);
-		$result = array();
+		$result = [];
 		while (($file = readdir($wrapped)) !== false) {
 			$result[] = $file;
 		}
-		$this->assertEquals(array('asd_', 'bar_'), $result);
+		$this->assertEquals(['asd_', 'bar_'], $result);
 	}
 }

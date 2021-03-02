@@ -22,15 +22,15 @@
 namespace Icewind\Streams\Tests;
 
 class DirectoryWrapperDummy extends \Icewind\Streams\DirectoryWrapper {
-    public static function wrap($source) {
-        return self::wrapSource($source);
-    }
+	public static function wrap($source) {
+		return self::wrapSource($source);
+	}
 
-    public function dir_readdir() {
-        $file = parent::dir_readdir();
-        if ($file !== false) {
-            $file .= '_';
-        }
-        return $file;
-    }
+	public function dir_readdir() {
+		$file = parent::dir_readdir();
+		if ($file !== false) {
+			$file .= '_';
+		}
+		return $file;
+	}
 }

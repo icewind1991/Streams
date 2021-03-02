@@ -21,7 +21,6 @@
 
 namespace Icewind\Streams;
 
-
 class WrapperHandler {
 	const NO_SOURCE_DIR = 1;
 

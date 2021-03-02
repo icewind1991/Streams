@@ -104,12 +104,12 @@ abstract class WrapperTest extends TestCase {
 		stream_set_blocking($wrapped, 0);
 		stream_set_timeout($wrapped, 1, 0);
 		stream_set_write_buffer($wrapped, 0);
-        $this->assertTrue(true);
+		$this->assertTrue(true);
 	}
 
 	public function testReadDir() {
 		$source = opendir(__DIR__);
-		$content = array();
+		$content = [];
 		while (($name = readdir($source)) !== false) {
 			$content[] = $name;
 		}
@@ -117,7 +117,7 @@ abstract class WrapperTest extends TestCase {
 
 		$source = opendir(__DIR__);
 		$wrapped = $this->wrapSource($source);
-		$wrappedContent = array();
+		$wrappedContent = [];
 		while (($name = readdir($wrapped)) !== false) {
 			$wrappedContent[] = $name;
 		}
@@ -126,7 +126,7 @@ abstract class WrapperTest extends TestCase {
 
 	public function testRewindDir() {
 		$source = opendir(__DIR__);
-		$content = array();
+		$content = [];
 		while (($name = readdir($source)) !== false) {
 			$content[] = $name;
 		}

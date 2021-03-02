@@ -72,12 +72,12 @@ class HashWrapperTest extends TestCase {
 	 */
 	public function testReadHash($algorithm, $expectedHash) {
 		$obtainedHash = null;
-		$callback = function($hash) use (&$obtainedHash) {
+		$callback = function ($hash) use (&$obtainedHash) {
 			$obtainedHash = $hash;
 		};
 
 		$stream = $this->wrapSourceRead($this->getSource(), $algorithm, $callback);
-		while(feof($stream) === false) {
+		while (feof($stream) === false) {
 			fread($stream, 20);
 		}
 		fclose($stream);
@@ -93,7 +93,7 @@ class HashWrapperTest extends TestCase {
 	 */
 	public function testWriteHash($algorithm, $expectedHash) {
 		$obtainedHash = null;
-		$callback = function($hash) use (&$obtainedHash) {
+		$callback = function ($hash) use (&$obtainedHash) {
 			$obtainedHash = $hash;
 		};
 

@@ -22,7 +22,7 @@
 namespace Icewind\Streams\Tests;
 
 class DirectoryWrapperNull extends \Icewind\Streams\DirectoryWrapper {
-    public static function wrap($source) {
-        return self::wrapSource($source);
-    }
+	public static function wrap($source) {
+		return self::wrapSource($source);
+	}
 }

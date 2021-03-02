@@ -8,7 +8,7 @@
 namespace Icewind\Streams\Tests;
 
 class UrlCallback extends \PHPUnit_Framework_TestCase {
-	protected $tempDirs = array();
+	protected $tempDirs = [];
 
 	protected function getTempDir() {
 		$dir = sys_get_temp_dir() . '/streams_' . uniqid();
@@ -30,7 +30,7 @@ class UrlCallback extends \PHPUnit_Framework_TestCase {
 		 * @var \SplFileInfo $file
 		 */
 		foreach ($iterator as $file) {
-			if (in_array($file->getBasename(), array('.', '..'))) {
+			if (in_array($file->getBasename(), ['.', '..'])) {
 				continue;
 			} elseif ($file->isDir()) {
 				rmdir($file->getPathname());

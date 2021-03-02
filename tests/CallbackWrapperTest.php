@@ -23,7 +23,7 @@ class CallbackWrapperTest extends WrapperTest {
 	}
 
 	public function testWrapInvalidSource() {
-	    $this->expectException(\BadMethodCallException::class);
+		$this->expectException(\BadMethodCallException::class);
 		$this->wrapSource('foo');
 	}
 

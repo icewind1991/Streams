@@ -21,7 +21,6 @@
 
 namespace Icewind\Streams\Tests;
 
-
 use Icewind\Streams\CountWrapper;
 
 class CountWrapperTest extends WrapperTest {

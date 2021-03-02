@@ -21,7 +21,7 @@ class IteratorDirectory extends \PHPUnit_Framework_TestCase {
 	 * @expectedException \BadMethodCallException
 	 */
 	public function testNoContext() {
-		$context = stream_context_create(array());
+		$context = stream_context_create([]);
 		stream_wrapper_register('iterator', '\Icewind\Streams\IteratorDirectory');
 		try {
 			opendir('iterator://', $context);
@@ -36,11 +36,11 @@ class IteratorDirectory extends \PHPUnit_Framework_TestCase {
 	 * @expectedException \BadMethodCallException
 	 */
 	public function testNoSource() {
-		$context = stream_context_create(array(
-			'dir' => array(
+		$context = stream_context_create([
+			'dir' => [
 				'foo' => 'bar'
-			)
-		));
+			]
+		]);
 		stream_wrapper_register('iterator', '\Icewind\Streams\IteratorDirectory');
 		try {
 			opendir('iterator://', $context);
@@ -60,16 +60,16 @@ class IteratorDirectory extends \PHPUnit_Framework_TestCase {
 
 	public function fileListProvider() {
 		$longList = array_fill(0, 500, 'foo');
-		return array(
-			array(
-				array(
+		return [
+			[
+				[
 					'foo',
 					'bar',
 					'qwerty'
-				)
-			),
-			array(
-				array(
+				]
+			],
+			[
+				[
 					'with spaces',
 					'under_scores',
 					'日本語',
@@ -78,24 +78,24 @@ class IteratorDirectory extends \PHPUnit_Framework_TestCase {
 					'0',
 					'double "quotes"',
 					"single 'quotes'"
-				)
-			),
-			array(
-				array(
+				]
+			],
+			[
+				[
 					'single item'
-				)
-			),
-			array(
+				]
+			],
+			[
 				$longList
-			),
-			array(
-				array()
-			)
-		);
+			],
+			[
+				[]
+			]
+		];
 	}
 
 	protected function basicTest($fileList, $dh) {
-		$result = array();
+		$result = [];
 
 		while (($file = readdir($dh)) !== false) {
 			$result[] = $file;
