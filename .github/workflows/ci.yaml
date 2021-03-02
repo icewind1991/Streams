@@ -66,6 +66,8 @@ jobs:
     strategy:
       matrix:
         php-version:
+          - "7.0"
+          - "7.1"
           - "7.2"
 
     steps:
@@ -74,8 +76,9 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: "${{ matrix.php-version }}"
-          coverage: pcov
       - name: Composer
-        run: composer require --dev phpunit/phpunit ^8
+        run: |
+          echo '{"autoload": {"psr-4": {"Icewind\\Streams\\": "src/"}},"autoload-dev": {"psr-4": {"Icewind\\Streams\\Tests\\": "tests/"}}}' > composer.json
+          composer require --dev phpunit/phpunit ^6
       - name: PHPUnit Tests
         run: php ./vendor/bin/phpunit tests  -c tests/phpunit.xml
