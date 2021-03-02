@@ -7,7 +7,7 @@
 
 namespace Icewind\Streams\Tests;
 
-class RetryWrapper extends WrapperTest {
+class RetryWrapperTest extends WrapperTest {
 
 	/**
 	 * @param resource $source
@@ -34,6 +34,6 @@ class RetryWrapper extends WrapperTest {
 	public function testFailedWrite() {
 		$source = fopen('php://temp', 'w');
 		$wrapped = \Icewind\Streams\RetryWrapper::wrap(FailWrapper::wrap($source));
-		fwrite($wrapped, 'foo');
+		$this->assertFalse(fwrite($wrapped, 'foo'));
 	}
 }

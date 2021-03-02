@@ -7,7 +7,9 @@
 
 namespace Icewind\Streams\Tests;
 
-class DirectoryFilter extends \PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class DirectoryFilterTest extends TestCase {
 	public function testFilterAcceptAll() {
 		$this->filter(
 			['a', 'b', 'c'],

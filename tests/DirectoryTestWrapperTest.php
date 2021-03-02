@@ -7,7 +7,7 @@
 
 namespace Icewind\Streams\Tests;
 
-class DirectoryWrapper extends IteratorDirectory {
+class DirectoryTestWrapperTest extends IteratorDirectoryTest {
 
 	/**
 	 * @param \Iterator | array $source

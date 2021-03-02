@@ -7,7 +7,9 @@
 
 namespace Icewind\Streams\Tests;
 
-class SeekableWrapper extends \PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class SeekableWrapperTest extends TestCase {
 	/**
 	 * @param resource $source
 	 * @return resource

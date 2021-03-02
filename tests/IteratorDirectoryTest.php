@@ -7,7 +7,10 @@
 
 namespace Icewind\Streams\Tests;
 
-class IteratorDirectory extends \PHPUnit_Framework_TestCase {
+use \BadMethodCallException;
+use PHPUnit\Framework\TestCase;
+
+class IteratorDirectoryTest extends TestCase {
 
 	/**
 	 * @param \Iterator | array $source
@@ -17,10 +20,8 @@ class IteratorDirectory extends \PHPUnit_Framework_TestCase {
 		return \Icewind\Streams\IteratorDirectory::wrap($source);
 	}
 
-	/**
-	 * @expectedException \BadMethodCallException
-	 */
 	public function testNoContext() {
+		$this->expectException(BadMethodCallException::class);
 		$context = stream_context_create([]);
 		stream_wrapper_register('iterator', '\Icewind\Streams\IteratorDirectory');
 		try {
@@ -32,10 +33,8 @@ class IteratorDirectory extends \PHPUnit_Framework_TestCase {
 		}
 	}
 
-	/**
-	 * @expectedException \BadMethodCallException
-	 */
 	public function testNoSource() {
+		$this->expectException(BadMethodCallException::class);
 		$context = stream_context_create([
 			'dir' => [
 				'foo' => 'bar'
@@ -51,10 +50,8 @@ class IteratorDirectory extends \PHPUnit_Framework_TestCase {
 		}
 	}
 
-	/**
-	 * @expectedException \BadMethodCallException
-	 */
 	public function testWrapInvalidSource() {
+		$this->expectException(BadMethodCallException::class);
 		$this->wrapSource(2);
 	}
 

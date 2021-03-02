@@ -7,7 +7,9 @@
 
 namespace Icewind\Streams\Tests;
 
-class PathWrapper extends \PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class PathWrapperTest extends TestCase {
 	private function getDataStream($data) {
 		$stream = fopen('php://temp', 'w+');
 		fwrite($stream, $data);

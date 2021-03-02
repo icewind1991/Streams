@@ -7,7 +7,9 @@
 
 namespace Icewind\Streams\Tests;
 
-class UrlCallback extends \PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class UrlCallbackTest extends TestCase {
 	protected $tempDirs = [];
 
 	protected function getTempDir() {
@@ -17,7 +19,7 @@ class UrlCallback extends \PHPUnit_Framework_TestCase {
 		return $dir;
 	}
 
-	public function tearDown() {
+	public function tearDown(): void {
 		foreach ($this->tempDirs as $dir) {
 			$this->rmdir($dir);
 		}
@@ -83,7 +85,7 @@ class UrlCallback extends \PHPUnit_Framework_TestCase {
 		mkdir($dir);
 		$path = \Icewind\Streams\UrlCallback::wrap($dir, null, null, null, null, $callback);
 		rmdir($path);
-		$this->assertFileNotExists($dir);
+		$this->assertFileDoesNotExist($dir);
 		$this->assertTrue($called);
 	}
 
@@ -110,7 +112,7 @@ class UrlCallback extends \PHPUnit_Framework_TestCase {
 		touch($file);
 		$path = \Icewind\Streams\UrlCallback::wrap($file, null, null, null, null, null, $callback);
 		unlink($path);
-		$this->assertFileNotExists($file);
+		$this->assertFileDoesNotExist($file);
 		$this->assertTrue($called);
 	}
 
