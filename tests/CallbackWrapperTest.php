@@ -22,10 +22,8 @@ class CallbackWrapperTest extends WrapperTest {
 		return \Icewind\Streams\CallbackWrapper::wrap($source, $read, $write, $close, $readDir, $preClose);
 	}
 
-	/**
-	 * @expectedException \BadMethodCallException
-	 */
 	public function testWrapInvalidSource() {
+	    $this->expectException(\BadMethodCallException::class);
 		$this->wrapSource('foo');
 	}
 

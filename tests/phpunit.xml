@@ -3,10 +3,4 @@
 	<testsuite name='Stream'>
 		<directory suffix='.php'>./</directory>
 	</testsuite>
-
-	<filter>
-		<whitelist Stream="true">
-			<directory suffix=".php">../src</directory>
-		</whitelist>
-	</filter>
 </phpunit>

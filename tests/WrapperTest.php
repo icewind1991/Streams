@@ -7,7 +7,9 @@
 
 namespace Icewind\Streams\Tests;
 
-abstract class WrapperTest extends \PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+abstract class WrapperTest extends TestCase {
 	/**
 	 * @param resource $source
 	 * @return resource
@@ -93,6 +95,7 @@ abstract class WrapperTest extends \PHPUnit_Framework_TestCase {
 		if (!flock($wrapped, LOCK_EX)) {
 			$this->fail('Unable to acquire lock');
 		}
+		$this->assertTrue(true);
 	}
 
 	public function testStreamOptions() {
@@ -101,6 +104,7 @@ abstract class WrapperTest extends \PHPUnit_Framework_TestCase {
 		stream_set_blocking($wrapped, 0);
 		stream_set_timeout($wrapped, 1, 0);
 		stream_set_write_buffer($wrapped, 0);
+        $this->assertTrue(true);
 	}
 
 	public function testReadDir() {

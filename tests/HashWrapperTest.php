@@ -23,7 +23,9 @@
 
 namespace Icewind\Streams\Tests;
 
-class HashWrapperTest extends \PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class HashWrapperTest extends TestCase {
 	const DATA = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 
 	/**

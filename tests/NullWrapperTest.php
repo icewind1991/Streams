@@ -17,10 +17,8 @@ class NullWrapperTest extends WrapperTest {
 		return \Icewind\Streams\NullWrapper::wrap($source);
 	}
 
-	/**
-	 * @expectedException \BadMethodCallException
-	 */
 	public function testNoContext() {
+        $this->expectException(\BadMethodCallException::class);
 		stream_wrapper_register('null', '\Icewind\Streams\NullWrapper');
 		$context = stream_context_create(array());
 		try {
@@ -32,10 +30,8 @@ class NullWrapperTest extends WrapperTest {
 		}
 	}
 
-	/**
-	 * @expectedException \BadMethodCallException
-	 */
 	public function testNoSource() {
+        $this->expectException(\BadMethodCallException::class);
 		stream_wrapper_register('null', '\Icewind\Streams\NullWrapper');
 		$context = stream_context_create(array(
 			'null' => array(
@@ -50,10 +46,8 @@ class NullWrapperTest extends WrapperTest {
 		}
 	}
 
-	/**
-	 * @expectedException \BadMethodCallException
-	 */
 	public function testWrapInvalidSource() {
+        $this->expectException(\BadMethodCallException::class);
 		$this->wrapSource('foo');
 	}
 }
