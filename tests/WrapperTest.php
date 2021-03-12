@@ -140,4 +140,15 @@ abstract class WrapperTest extends TestCase {
 		rewinddir($wrapped);
 		$this->assertSame($content[0], readdir($wrapped));
 	}
+
+	public function testDoubleClose() {
+		$source = fopen('php://temp', 'r+');
+		rewind($source);
+
+		$wrapped = $this->wrapSource($source);
+
+		fclose($source);
+		fclose($wrapped);
+		$this->assertFalse(is_resource($source));
+	}
 }
