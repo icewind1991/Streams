@@ -94,6 +94,8 @@ abstract class Wrapper extends WrapperHandler implements File, Directory {
 	public function stream_close() {
 		if (is_resource($this->source)) {
 			return fclose($this->source);
+		} else {
+			return true;
 		}
 	}
 
@@ -108,5 +110,9 @@ abstract class Wrapper extends WrapperHandler implements File, Directory {
 
 	public function dir_rewinddir() {
 		return rewind($this->source);
+	}
+
+	public function getSource() {
+		return $this->source;
 	}
 }
