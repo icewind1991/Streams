@@ -44,7 +44,7 @@ abstract class Wrapper extends WrapperHandler implements File, Directory {
 
 	public function stream_seek($offset, $whence = SEEK_SET) {
 		$result = fseek($this->source, $offset, $whence);
-		return $result == 0 ? true : false;
+		return $result == 0;
 	}
 
 	public function stream_tell() {
@@ -94,8 +94,6 @@ abstract class Wrapper extends WrapperHandler implements File, Directory {
 	public function stream_close() {
 		if (is_resource($this->source)) {
 			return fclose($this->source);
-		} else {
-			return true;
 		}
 	}
 
@@ -114,5 +112,20 @@ abstract class Wrapper extends WrapperHandler implements File, Directory {
 
 	public function getSource() {
 		return $this->source;
+	}
+
+	/**
+	 * Retrieves header/metadata from the source stream.
+	 *
+	 * This is equivalent to calling `stream_get_meta_data` on the source stream except nested stream wrappers are handled transparently
+	 *
+	 * @return array
+	 */
+	public function getMetaData(): array {
+		$meta = stream_get_meta_data($this->source);
+		while (isset($meta['wrapper_data']) && $meta['wrapper_data'] instanceof Wrapper) {
+			$meta = $meta['wrapper_data']->getMetaData();
+		}
+		return $meta;
 	}
 }

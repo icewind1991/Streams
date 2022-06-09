@@ -7,6 +7,7 @@
 
 namespace Icewind\Streams\Tests;
 
+use Icewind\Streams\Wrapper;
 use PHPUnit\Framework\TestCase;
 
 abstract class WrapperTest extends TestCase {
@@ -150,5 +151,17 @@ abstract class WrapperTest extends TestCase {
 		fclose($source);
 		fclose($wrapped);
 		$this->assertFalse(is_resource($source));
+	}
+
+	public function testGetMetaData() {
+		$source = fopen(__FILE__, 'r+');
+		$sourceMeta = stream_get_meta_data($source);
+
+		$wrapped = $this->wrapSource($source);
+		$wrappedMeta = stream_get_meta_data($wrapped);
+		$wrapper = $wrappedMeta['wrapper_data'];
+		$this->assertInstanceOf(Wrapper::class, $wrapper);
+
+		$this->assertEquals($sourceMeta, $wrapper->getMetaData());
 	}
 }
