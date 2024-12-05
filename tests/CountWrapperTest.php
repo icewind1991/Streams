@@ -46,4 +46,22 @@ class CountWrapperTest extends WrapperTest {
 		fclose($wrapped);
 		$this->assertSame(6, $count);
 	}
+
+    public function testReadCountSeek() {
+        $count = 0;
+
+        $source = fopen('php://temp', 'r+');
+        fwrite($source, 'foobar');
+        rewind($source);
+
+        $wrapped = CountWrapper::wrap($source, function ($readCount) use (&$count) {
+            $count = $readCount;
+        });
+
+        stream_get_contents($wrapped);
+        fseek($wrapped, 3);
+        stream_get_contents($wrapped);
+        fclose($wrapped);
+        $this->assertSame(6, $count);
+    }
 }
